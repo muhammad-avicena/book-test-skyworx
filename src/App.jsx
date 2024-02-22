@@ -1,16 +1,18 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginPage } from "./pages";
+import AppRoutes from "./routes";
+import { BookProvider } from "./contexts/BookContext";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 import "./App.css";
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LoginPage />,
-    },
-  ]);
-
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <AuthProvider>
+        <BookProvider>
+          <AppRoutes />
+        </BookProvider>
+      </AuthProvider>
+    </>
+  );
 }
 
 export default App;

@@ -1,11 +1,53 @@
 import { TEInput, TERipple } from "tw-elements-react";
+import { useState } from "react";
+import { UserData } from "../../constants";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
-export default function ExampleV3() {
+const LoginPageComponents = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const user = UserData.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (user) {
+      console.log("user login success");
+      Cookies.set("token", user.token);
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "You will redirect to dashboard soon...",
+      });
+
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2000);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: "Invalid username or password",
+      });
+    }
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <section className="h-screen">
       <div className="container h-full px-6 py-24">
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-          {/* <!-- Left column container with background--> */}
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
@@ -14,26 +56,31 @@ export default function ExampleV3() {
             />
           </div>
 
-          {/* <!-- Right column container with form --> */}
           <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
-            <form>
-              {/* <!-- Email input --> */}
+            <form onSubmit={handleLogin}>
+              <h1
+                className="block text-gray-700 text-3xl font-bold mb-2"
+                htmlFor="title"
+              >
+                Login Panel
+              </h1>
               <TEInput
-                type="email"
-                label="Email address"
+                type="text"
+                label="Username"
                 size="lg"
+                value={username}
+                onChange={handleUsernameChange}
                 className="mb-6"
               ></TEInput>
-
-              {/* <!--Password input--> */}
               <TEInput
                 type="password"
                 label="Password"
                 className="mb-6"
+                value={password}
+                onChange={handlePasswordChange}
                 size="lg"
               ></TEInput>
 
-              {/* <!-- Remember me checkbox --> */}
               <div className="mb-6 flex items-center justify-between">
                 <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
                   <input
@@ -50,8 +97,6 @@ export default function ExampleV3() {
                     Remember me
                   </label>
                 </div>
-
-                {/* <!-- Forgot password link --> */}
                 <a
                   href="#!"
                   className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
@@ -60,25 +105,19 @@ export default function ExampleV3() {
                 </a>
               </div>
 
-              {/* <!-- Submit button --> */}
-
               <TERipple rippleColor="light" className="w-full">
                 <button
-                  type="button"
+                  type="submit"
                   className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 >
                   Sign in
                 </button>
               </TERipple>
-
-              {/* <!-- Divider --> */}
               <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                 <p className="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
                   OR
                 </p>
               </div>
-
-              {/* <!-- Social login buttons --> */}
               <TERipple rippleColor="light" className="w-full">
                 <a
                   className="mb-3 flex w-full items-center justify-center rounded bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
@@ -86,7 +125,6 @@ export default function ExampleV3() {
                   href="#!"
                   role="button"
                 >
-                  {/* <!-- Facebook --> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="mr-2 h-3.5 w-3.5"
@@ -98,10 +136,15 @@ export default function ExampleV3() {
                   Continue with Facebook
                 </a>
               </TERipple>
+              <div className="text-center text-gray-500 text-sm mt-4">
+                Copyright © Avicena 2024.
+              </div>
             </form>
           </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default LoginPageComponents;
