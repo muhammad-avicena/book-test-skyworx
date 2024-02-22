@@ -18,6 +18,7 @@ const LoginPageComponents = () => {
     if (user) {
       console.log("user login success");
       Cookies.set("token", user.token);
+      sessionStorage.setItem("username", user.username);
       Swal.fire({
         icon: "success",
         title: "Login Successful",
@@ -59,7 +60,7 @@ const LoginPageComponents = () => {
           <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
             <form onSubmit={handleLogin}>
               <h1
-                className="block text-gray-700 text-3xl font-bold mb-2"
+                className="block text-white text-3xl font-bold mb-2"
                 htmlFor="title"
               >
                 Login Panel
@@ -70,16 +71,16 @@ const LoginPageComponents = () => {
                 size="lg"
                 value={username}
                 onChange={handleUsernameChange}
-                className="mb-6"
-              ></TEInput>
+                className="mb-6 text-white"
+              />
               <TEInput
                 type="password"
                 label="Password"
-                className="mb-6"
+                className="mb-6 text-white"
                 value={password}
                 onChange={handlePasswordChange}
                 size="lg"
-              ></TEInput>
+              />
 
               <div className="mb-6 flex items-center justify-between">
                 <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -91,7 +92,7 @@ const LoginPageComponents = () => {
                     defaultChecked
                   />
                   <label
-                    className="inline-block pl-[0.15rem] hover:cursor-pointer"
+                    className="inline-block text-white pl-[0.15rem] hover:cursor-pointer"
                     htmlFor="exampleCheck3"
                   >
                     Remember me
@@ -114,7 +115,7 @@ const LoginPageComponents = () => {
                 </button>
               </TERipple>
               <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-                <p className="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
+                <p className="mx-4 mb-0 text-center text-white font-semibold dark:text-neutral-200">
                   OR
                 </p>
               </div>
